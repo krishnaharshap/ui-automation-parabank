@@ -31,17 +31,22 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Ensure Playwright browsers are installed
+        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
+
       - name: Build project with Maven
         run: mvn clean compile
 
       - name: Run UI automation tests
         run: mvn test
 
-      - name: Upload TestNG and Playwright reports
+      # Upload both TestNG (Surefire) and Extent Reports
+      - name: Upload Test Reports (TestNG + Extent)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-reports
           path: |
             target/surefire-reports/
+            reports/ExtentReport.html
             playwright-report/

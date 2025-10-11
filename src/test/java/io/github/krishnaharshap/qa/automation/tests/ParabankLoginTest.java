@@ -2,8 +2,17 @@ package io.github.krishnaharshap.qa.automation.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import io.github.krishnaharshap.qa.automation.base.BaseTest;
+import io.github.krishnaharshap.qa.automation.pages.HomePage;
 
 public class ParabankLoginTest extends BaseTest {
+
+    @Test
+    public void testHomePageWelcome() {
+        HomePage home = new HomePage(page);
+        String text = home.getWelcomeText();
+        Assert.assertTrue(text.contains("Welcome"));
+    }
 
     @Test
     public void testLoginPageLoadsSuccessfully() {
