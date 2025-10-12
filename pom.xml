@@ -98,6 +98,19 @@
     <build>
         <pluginManagement>
             <plugins>
+                <!--Playwright Maven Plugin -->
+                <plugin>
+                    <groupId>com.microsoft.playwright</groupId>
+                    <artifactId>playwright-maven-plugin</artifactId>
+                    <version>1.39.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>install</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
 
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -114,7 +127,6 @@
                         <release>17</release>
                     </configuration>
                 </plugin>
-
 
                 <!-- Surefire Plugin -->
                 <plugin>

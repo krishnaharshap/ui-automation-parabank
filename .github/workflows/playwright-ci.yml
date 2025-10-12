@@ -15,12 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # - name: Set up JDK 19
-      #   uses: actions/setup-java@v4
-      #   with:
-      #     distribution: 'temurin'
-      #     java-version: '19'
-      #     cache: 'maven'
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -45,13 +39,17 @@ jobs:
           echo "MAVEN_OPTS = $MAVEN_OPTS"
           echo "PATH = $PATH"
 
-
-
       - name: Build project with Maven
         run: mvn -B clean compile
 
       - name: Run UI automation tests
-        run: mvn test
+        run: mvn test -Dplaywright.headless=true
+
+      - name: Upload Test Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: screenshots
+          path: target/screenshots/
 
       - name: Upload Test Reports (Surefire + Extent + Playwright)
         if: always()
@@ -61,4 +59,4 @@ jobs:
           path: |
             target/surefire-reports/
             reports/ExtentReport.html
-            playwright-report/
+            target/playwright-report/
