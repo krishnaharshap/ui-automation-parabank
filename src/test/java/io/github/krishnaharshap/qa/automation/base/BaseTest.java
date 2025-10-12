@@ -16,13 +16,13 @@ public class BaseTest {
         playwright = Playwright.create();
         switch (browserName.toLowerCase()) {
             case "firefox":
-                browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(false));
+                browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(true));
                 break;
             case "webkit":
-                browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(false));
+                browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(true));
                 break;
             default:
-                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
         }
         context = browser.newContext();
         page = context.newPage();
