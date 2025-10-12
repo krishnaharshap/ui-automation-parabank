@@ -11,8 +11,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>19</maven.compiler.source>
-        <maven.compiler.target>19</maven.compiler.target>
+        <!-- <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target> -->
         <surefire.version>3.2.5</surefire.version>
         <playwright.version>1.49.0</playwright.version>
         <testng.version>7.10.2</testng.version>
@@ -111,21 +111,10 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.11.0</version>
                     <configuration>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
-                        <annotationProcessorPaths>
-                            <path>
-                                <groupId>org.projectlombok</groupId>
-                                <artifactId>lombok</artifactId>
-                                <version>${lombok.version}</version>
-                            </path>
-                        </annotationProcessorPaths>
-                        <compilerArgs>
-                            <arg>--add-opens</arg>
-                            <arg>jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
-                        </compilerArgs>
+                        <release>19</release>
                     </configuration>
                 </plugin>
+
 
                 <!-- Surefire Plugin -->
                 <plugin>

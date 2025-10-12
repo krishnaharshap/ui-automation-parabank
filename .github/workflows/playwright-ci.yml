@@ -2,11 +2,9 @@ name: Playwright UI Automation - Parabank
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build-and-test:
@@ -16,14 +14,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Java 17
+      - name: Set up JDK 19
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
           distribution: 'temurin'
+          java-version: '19'
           cache: 'maven'
 
-      - name: Set up Node.js (for Playwright)
+      - name: Set up Node.js for Playwright
         uses: actions/setup-node@v4
         with:
           node-version: '18'
@@ -31,21 +29,17 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Ensure Playwright browsers are installed
-        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
-
       - name: Build project with Maven
-        run: mvn clean compile
+        run: mvn -B clean compile
 
       - name: Run UI automation tests
         run: mvn test
 
-      # Upload both TestNG (Surefire) and Extent Reports
-      - name: Upload Test Reports (TestNG + Extent)
+      - name: Upload Test Reports (Surefire + Extent + Playwright)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports
+          name: ui-test-reports
           path: |
             target/surefire-reports/
             reports/ExtentReport.html
