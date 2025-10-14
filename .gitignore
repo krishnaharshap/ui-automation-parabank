@@ -1,25 +1,52 @@
-# Maven
+# ----------------------------
+# Maven / Java
+# ----------------------------
 /target/
 *.log
 
+# Lombok generated files (optional)
+/*.class
+
+# ----------------------------
+# IDEs
+# ----------------------------
 # IntelliJ IDEA
 /.idea/
-.idea/
 *.iml
 out/
 
-# Playwright
+# VSCode
+/.vscode/
+.vscode-test/
+
+# ----------------------------
+# Node / Playwright
+# ----------------------------
+# Node modules
+node_modules/
+
+# Playwright browsers and reports
+.playwright/
 playwright-report/
 test-results/
 trace.zip
 
-# OS
+# NPM logs
+npm-debug.log*
+package-lock.json   # optional, ignore if you don't want to track lock file
+
+# ----------------------------
+# OS Files
+# ----------------------------
 .DS_Store
 Thumbs.db
 
-# VSCode
-/.vscode/
-.vscode/
-
+# ----------------------------
 # Misc
+# ----------------------------
 *.txt
+
+# ----------------------------
+# Environment variables
+# ----------------------------
+*.env

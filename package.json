@@ -1,0 +1,23 @@
+{
+  "name": "ui-automation-parabank",
+  "version": "1.0.0",
+  "description": "This repository contains a scalable UI automation framework built using:\r - **Playwright for Java**\r - **TestNG**\r - **Maven**\r - **Extent Reports** (HTML reporting)\r - **GitHub Actions CI/CD**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krishnaharshap/ui-automation-parabank.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krishnaharshap/ui-automation-parabank/issues"
+  },
+  "homepage": "https://github.com/krishnaharshap/ui-automation-parabank#readme",
+  "dependencies": {
+    "@playwright/test": "^1.56.0"
+  }
+}

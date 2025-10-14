@@ -19,7 +19,7 @@ public class ParabankLoginTest {
     @BeforeClass
     public void setup() {
         playwright = Playwright.create();
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
         page = browser.newPage();
         page.setViewportSize(1280, 720);
 
@@ -69,7 +69,7 @@ public class ParabankLoginTest {
     private void captureScreenshot(String testName) {
         try {
             page.screenshot(new Page.ScreenshotOptions()
-                    .setPath(Paths.get("target/screenshots/" + testName + ".png")));
+                    .setPath(Paths.get("screenshots/" + testName + ".png")));
         } catch (Exception e) {
             System.err.println("Failed to capture screenshot: " + e.getMessage());
         }
