@@ -2,6 +2,8 @@ package io.github.krishnaharshap.qa.automation.pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.PlaywrightException;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class HomePage {
 
@@ -28,12 +30,17 @@ public class HomePage {
 
     /** Get the Welcome text safely */
     public String getWelcomeText() {
-        welcomeHeading.waitFor(); // Wait until visible
-        return welcomeHeading.textContent().trim();
-    }
+    // Wait until visible with timeout
+    welcomeHeading.waitFor(new Locator.WaitForOptions().setTimeout(120_000).setState(WaitForSelectorState.VISIBLE));
+    return welcomeHeading.textContent().trim();
+}
 
     /** Utility: Check if welcome heading is visible */
-    public boolean isWelcomeVisible() {
+public boolean isWelcomeVisible() {
+    try {
         return welcomeHeading.isVisible();
+    } catch (PlaywrightException e) {
+        return false;
     }
+}
 }

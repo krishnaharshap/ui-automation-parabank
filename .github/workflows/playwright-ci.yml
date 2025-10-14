@@ -41,7 +41,10 @@ jobs:
         run: mvn -B clean compile
 
       - name: Run UI automation tests (headless)
-        run: mvn test -Dplaywright.headless=true
+        run: mvn test -Dplaywright.headless=true -Dplaywright.slowMo=50
+
+      - name: Create screenshots folder
+        run: mkdir -p target/screenshots
 
       - name: Upload Test Artifacts & Reports
         if: always()

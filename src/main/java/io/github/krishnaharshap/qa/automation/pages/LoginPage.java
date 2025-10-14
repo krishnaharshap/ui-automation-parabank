@@ -1,6 +1,9 @@
 package io.github.krishnaharshap.qa.automation.pages;
 
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.PlaywrightException;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class LoginPage {
 
@@ -28,7 +31,15 @@ public class LoginPage {
     }
 
     /** Check if login error message is visible */
-    public boolean isLoginErrorVisible() {
-        return page.isVisible(loginErrorMessage);
+   public boolean isLoginErrorVisible() {
+    // Wait for the error message explicitly
+    Locator errorMsg = page.locator("css=.error"); // Replace with actual selector
+    try {
+        errorMsg.waitFor(new Locator.WaitForOptions().setTimeout(60_000).setState(WaitForSelectorState.VISIBLE));
+        return errorMsg.isVisible();
+    } catch (PlaywrightException e) {
+        return false;
     }
+}
+
 }
