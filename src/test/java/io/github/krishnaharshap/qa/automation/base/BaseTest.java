@@ -13,16 +13,17 @@ public class BaseTest {
     @BeforeClass
     @Parameters("browser")
     public void setUp(@Optional("chromium") String browserName) {
+        boolean headless = Boolean.parseBoolean(System.getProperty("playwright.headless", "true"));
         playwright = Playwright.create();
         switch (browserName.toLowerCase()) {
             case "firefox":
-                browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(true));
+                browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(headless));
                 break;
             case "webkit":
-                browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(true));
+                browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(headless));
                 break;
             default:
-                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(headless));
         }
         context = browser.newContext();
         page = context.newPage();

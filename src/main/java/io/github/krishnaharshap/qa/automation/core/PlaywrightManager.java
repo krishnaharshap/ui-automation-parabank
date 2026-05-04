@@ -14,8 +14,9 @@ public class PlaywrightManager {
 
     public static Page getPage() {
         if (page == null) {
+            boolean headless = Boolean.parseBoolean(System.getProperty("playwright.headless", "true"));
             playwright = Playwright.create();
-            browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+            browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(headless));
             context = browser.newContext();
             page = context.newPage();
         }

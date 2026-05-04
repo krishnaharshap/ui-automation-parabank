@@ -30,6 +30,8 @@ node_modules/
 playwright-report/
 test-results/
 trace.zip
+reports/
+screenshots/
 
 # NPM logs
 npm-debug.log*
