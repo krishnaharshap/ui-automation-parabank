@@ -1,8 +1,15 @@
 package io.github.krishnaharshap.qa.automation.base;
 
-import com.microsoft.playwright.*;
-import io.github.krishnaharshap.qa.automation.utils.ExtentManager;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 
 public class BaseTest {
     protected Playwright playwright;
@@ -15,16 +22,11 @@ public class BaseTest {
     public void setUp(@Optional("chromium") String browserName) {
         boolean headless = Boolean.parseBoolean(System.getProperty("playwright.headless", "true"));
         playwright = Playwright.create();
-        switch (browserName.toLowerCase()) {
-            case "firefox":
-                browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(headless));
-                break;
-            case "webkit":
-                browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(headless));
-                break;
-            default:
-                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(headless));
-        }
+        browser = switch (browserName.toLowerCase()) {
+            case "firefox" -> playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(headless));
+            case "webkit" -> playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(headless));
+            default -> playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(headless));
+        };
         context = browser.newContext();
         page = context.newPage();
     }

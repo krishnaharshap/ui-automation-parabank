@@ -1,40 +1,33 @@
 package io.github.krishnaharshap.qa.automation.tests;
 
-import com.microsoft.playwright.*;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.Page;
+import io.github.krishnaharshap.qa.automation.base.BaseTest;
+import io.github.krishnaharshap.qa.automation.listeners.RetryAnalyzer;
 import io.github.krishnaharshap.qa.automation.pages.LoginPage;
 import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class ParabankLoginTest {
+public class ParabankLoginTest extends BaseTest {
 
     private static final String BASE_URL = System.getProperty(
             "parabank.baseUrl",
             "https://parabank.parasoft.com/parabank/index.htm"
     );
 
-    private Playwright playwright;
-    private Browser browser;
-    private BrowserContext context;
-    private Page page;
     private LoginPage loginPage;
-
-    @BeforeClass
-    public void setup() {
-        playwright = Playwright.create();
-        boolean headless = Boolean.parseBoolean(System.getProperty("playwright.headless", "true"));
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(headless));
-    }
 
     @BeforeMethod
     public void createPage() {
         context = browser.newContext(new Browser.NewContextOptions().setViewportSize(1280, 720));
         page = context.newPage();
-        page.setViewportSize(1280, 720);
 
         loginPage = new LoginPage(page);
     }
@@ -47,24 +40,14 @@ public class ParabankLoginTest {
         if (context != null) context.close();
     }
 
-    @AfterClass
-    public void teardown() {
-        if (browser != null) {
-            browser.close();
-        }
-        if (playwright != null) {
-            playwright.close();
-        }
-    }
-
-    @Test(description = "Verify the ParaBank login form is available")
+    @Test(description = "Verify the ParaBank login form is available", retryAnalyzer = RetryAnalyzer.class)
     public void testLoginFormIsDisplayed() {
         loginPage.navigateTo(BASE_URL);
 
         Assert.assertTrue(loginPage.isLoginFormVisible(), "Expected ParaBank login form to be visible.");
     }
 
-    @Test(description = "Verify error message when credentials are missing")
+    @Test(description = "Verify error message when credentials are missing", retryAnalyzer = RetryAnalyzer.class)
     public void testMissingCredentialsErrorMessage() {
         loginPage.navigateTo(BASE_URL);
         loginPage.login("", "");
