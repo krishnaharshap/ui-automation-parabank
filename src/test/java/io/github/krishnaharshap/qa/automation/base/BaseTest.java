@@ -27,13 +27,10 @@ public class BaseTest {
             case "webkit" -> playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(headless));
             default -> playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(headless));
         };
-        context = browser.newContext();
-        page = context.newPage();
     }
 
     @AfterClass
     public void tearDown() {
-        if (context != null) context.close();
         if (browser != null) browser.close();
         if (playwright != null) playwright.close();
     }
